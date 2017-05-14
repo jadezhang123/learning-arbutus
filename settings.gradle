@@ -1,0 +1,3 @@
+rootProject.name = 'learning-arbutus'
+include 'learning-arbutus-shiro'
+
