@@ -1,0 +1,6 @@
+rootProject.name = 'learning-arbutus'
+include 'learning-arbutus-api'
+include 'learning-arbutus-domain'
+include 'learning-arbutus-service'
+include 'learning-arbutus-web'
+
