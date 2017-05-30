@@ -19,6 +19,10 @@
         </property>
     </bean>-->
 
+    <!-- 引入tbschedule配置文件 -->
+    <import resource="classpath:schedule.xml"/>
+
+
     <import resource="classpath:spring-mybatis.xml"/>
     <import resource="classpath:dubbo/learning-arbutus-consumer.xml"/>
 
