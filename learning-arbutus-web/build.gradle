@@ -12,6 +12,7 @@ dependencies {
     compile 'org.apache.shiro:shiro-spring:1.3.2'
     compile 'org.apache.shiro:shiro-ehcache:1.3.2'
     compile 'org.apache.shiro:shiro-cas:1.3.2'
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
 
     compile 'cz.jirutka.spring:spring-rest-exception-handler:1.2.0'
 
