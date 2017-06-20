@@ -20,4 +20,6 @@
 
     <bean id="batchTaskManager" class="own.jadezhang.learning.arbutus.basic.BatchTaskManager"></bean>
 
+    <bean id="statTaskManager" class="own.jadezhang.learning.arbutus.basic.StatTaskManager"></bean>
+
 </beans>

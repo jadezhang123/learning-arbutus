@@ -17,19 +17,27 @@ public class EhcacheDemo {
     @Test
     public void test() throws Exception {
 
-        CacheManager cacheManager = CacheManager.create(this.getClass().getClassLoader().getResourceAsStream("ehcache-disk.xml"));
+        //CacheManager cacheManager = CacheManager.create(this.getClass().getClassLoader().getResourceAsStream("ehcache-disk.xml"));
+        CacheManager cacheManager = CacheManager.create();
         String[] cacheNames = cacheManager.getCacheNames();
         for (String cacheName : cacheNames) {
             System.out.println(cacheName);
         }
-        Cache cache = cacheManager.getCache("cacheDisk");
-        Element element = new Element("firstKey", "firstValue");
+        Cache cache = cacheManager.getCache("diskPersistentCache");
+        Element element;
+        /*for (int i = 0; i < 10; i++) {
+            element = new Element("key"+i, "firstValue:"+i);
+            cache.put(element);
+        }*/
+        element = new Element("firstKey", "firstValue");
         cache.put(element);
         List keys = cache.getKeys();
         System.out.println(keys.size());
         Element fromCache = cache.get("firstKey");
         Assert.assertNotNull(fromCache);
         Assert.assertEquals("firstValue", fromCache.getValue());
+
+        cacheManager.shutdown();
 
     }
 }

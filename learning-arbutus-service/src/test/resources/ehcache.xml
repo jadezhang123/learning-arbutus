@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EhCache XML configuration file used for Shiro spring sample application -->
-<ehcache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd">
 
     <!-- Sets the path to the directory where cache .data files are created.
 
@@ -54,22 +55,16 @@ java.io.tmpdir - Default temp file path -->
             overflowToDisk="false"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
-            />
+    />
 
-    <!-- We want eternal="true" (with no timeToIdle or timeToLive settings) because Shiro manages session
-expirations explicitly.  If we set it to false and then set corresponding timeToIdle and timeToLive properties,
-ehcache would evict sessions without Shiro's knowledge, which would cause many problems
-(e.g. "My Shiro session timeout is 30 minutes - why isn't a session available after 2 minutes?"
-Answer - ehcache expired it due to the timeToIdle property set to 120 seconds.)
 
-diskPersistent=true since we want an enterprise session management feature - ability to use sessions after
-even after a JVM restart.  -->
-    <cache name="demoCache"
-           maxElementsInMemory="10000"
+    <cache name="diskPersistentCache"
+           maxElementsInMemory="10"
            eternal="true"
            overflowToDisk="true"
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="600">
+        <bootstrapCacheLoaderFactory  class="net.sf.ehcache.store.DiskStoreBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true"></bootstrapCacheLoaderFactory>
     </cache>
 
     <cache name="testCache"
