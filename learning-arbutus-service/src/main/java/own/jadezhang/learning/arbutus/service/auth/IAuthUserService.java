@@ -20,6 +20,7 @@
 
 package own.jadezhang.learning.arbutus.service.auth;
 
+import org.springframework.cache.annotation.Cacheable;
 import own.jadezhang.base.common.dao.IBaseDAO;
 import own.jadezhang.base.common.domain.BaseDomain;
 import own.jadezhang.base.common.service.IBaseService;
@@ -45,6 +46,7 @@ public interface IAuthUserService<D extends IBaseDAO<T>, T extends BaseDomain> e
      * @param userPrincipal
      * @return
      */
+    @Cacheable("diskPersistentCache")
     AuthUser findByPrincipal(String userPrincipal);
 
     /**

@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ScheduleTester {
     private static final Logger logger = LoggerFactory.getLogger(ScheduleTester.class);
 
+
     @Autowired
     TBScheduleManagerFactory scheduleManagerFactory;
 

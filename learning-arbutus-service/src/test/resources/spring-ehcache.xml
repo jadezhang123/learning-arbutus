@@ -3,6 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
+    <import resource="classpath:spring-service.xml"></import>
+
     <bean id="cacheManager"
           class="org.springframework.cache.ehcache.EhCacheCacheManager" >
         <property name="cacheManager" ref="ehcache"/>

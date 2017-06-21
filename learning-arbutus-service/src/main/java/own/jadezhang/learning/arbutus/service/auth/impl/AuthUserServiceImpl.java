@@ -49,8 +49,10 @@ public class AuthUserServiceImpl extends AbstractBaseService<IBaseDAO<AuthUser>,
         return authUserDAO;
     }
 
+
     @Override
     public AuthUser findByPrincipal(String userPrincipal) {
+        System.out.println("not hit cache ....");
         String queryKey;
         if (RegexUtil.isPhone(userPrincipal)) {
             queryKey = AuthUserParam.F_Phone;
