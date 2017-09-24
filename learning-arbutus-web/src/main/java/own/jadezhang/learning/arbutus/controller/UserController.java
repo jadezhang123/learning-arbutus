@@ -6,10 +6,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import own.jadezhang.learning.arbutus.domain.auth.AuthUser;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +17,7 @@ import java.util.List;
 /**
  * Created by Zhang Junwei on 2017/5/14.
  */
-@Controller
+@RestController
 @RequestMapping("/sys/user")
 public class UserController {
 
@@ -46,11 +43,18 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = "/list" , method = {RequestMethod.GET})
     @RequiresPermissions({"eval:record:*"})
     public List list() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("有权限");
         return arrayList;
     }
+
+    @RequestMapping(value = "/delete", method = {RequestMethod.DELETE})
+    public boolean delete(){
+        logger.info("delete in UserController#delete()");
+        return true;
+    }
+
 }

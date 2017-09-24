@@ -92,7 +92,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /login.html = anon
-                /sys/user/login = anon
+                /sys/user/* = anon
                 /logout = logout
                 # everything else requires authentication:
                 /** = authc
