@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="own.jadezhang.learning.arbutus.dao.auth.IAuthAccessControlDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        roleCode,
+        permissionCode,
+        state
+    </sql>
+    <insert id="insert" parameterType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        INSERT INTO shiro_auth_access_control (
+		    roleCode
+		    ,permissionCode
+		    ,state
+        ) VALUES (
+                #{roleCode}
+                ,#{permissionCode}
+                ,#{state}
+    )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO shiro_auth_access_control (
+            roleCode
+           ,permissionCode
+           ,state
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.roleCode}
+                ,#{item.permissionCode}
+                ,#{item.state}
+     )
+        </foreach>
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        UPDATE shiro_auth_access_control
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roleCode!=null">
+                roleCode = #{roleCode},
+            </if>
+            <if test="permissionCode!=null">
+                permissionCode = #{permissionCode},
+            </if>
+            <if test="state!=null">
+                state = #{state},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap" parameterType="java.util.Map">
+        UPDATE shiro_auth_access_control
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roleCode!=null">
+                roleCode = #{roleCode},
+            </if>
+            <if test="permissionCode!=null">
+                permissionCode = #{permissionCode},
+            </if>
+            <if test="state!=null">
+                state = #{state},
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE shiro_auth_access_control
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.roleCode!=null">
+                roleCode = #{update.roleCode},
+            </if>
+            <if test="update.permissionCode!=null">
+                permissionCode = #{update.permissionCode},
+            </if>
+            <if test="update.state!=null">
+                state = #{update.state},
+            </if>
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.roleCode!=null">
+                AND roleCode = #{condition.roleCode}
+            </if>
+            <if test="condition.permissionCode!=null">
+                AND permissionCode = #{condition.permissionCode}
+            </if>
+            <if test="condition.state!=null">
+                AND state = #{condition.state}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        UPDATE shiro_auth_access_control
+        <trim prefix="SET" suffixOverrides=",">
+            roleCode = #{roleCode},
+            permissionCode = #{permissionCode},
+            state = #{state},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM shiro_auth_access_control
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds" parameterType="java.util.List">
+        DELETE FROM shiro_auth_access_control WHERE id in <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM shiro_auth_access_control
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="roleCode!=null">
+                AND roleCode = #{roleCode}
+            </if>
+            <if test="permissionCode!=null">
+                AND permissionCode = #{permissionCode}
+            </if>
+            <if test="state!=null">
+                AND state = #{state}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty">
+        DELETE FROM shiro_auth_access_control WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="paging" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control
+        <where>
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.roleCode!=null">
+                ${condition.groupOp}   roleCode  ${condition.roleCode.op}  #{condition.roleCode.data}
+            </if>
+            <if test="condition.permissionCode!=null">
+                ${condition.groupOp}   permissionCode  ${condition.permissionCode.op}  #{condition.permissionCode.data}
+            </if>
+            <if test="condition.state!=null">
+                ${condition.groupOp}   state  ${condition.state.op}  #{condition.state.data}
+            </if>
+        </where>
+
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) FROM shiro_auth_access_control
+        <where>
+            <if test="id!=null">
+                ${groupOp} id ${id.op}  #{id.data}
+            </if>
+            <if test="roleCode!=null">
+                ${groupOp} roleCode ${roleCode.op}  #{roleCode.data}
+            </if>
+            <if test="permissionCode!=null">
+                ${groupOp} permissionCode ${permissionCode.op}  #{permissionCode.data}
+            </if>
+            <if test="state!=null">
+                ${groupOp} state ${state.op}  #{state.data}
+            </if>
+        </where>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id like CONCAT('%', #{condition.id} , '%')
+            </if>
+            <if test="condition.roleCode!=null">
+                AND roleCode like CONCAT('%', #{condition.roleCode} , '%')
+            </if>
+            <if test="condition.permissionCode!=null">
+                AND permissionCode like CONCAT('%', #{condition.permissionCode} , '%')
+            </if>
+            <if test="condition.state!=null">
+                AND state like CONCAT('%', #{condition.state} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryList" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.roleCode!=null">
+                AND roleCode = #{condition.roleCode}
+            </if>
+            <if test="condition.permissionCode!=null">
+                AND permissionCode = #{condition.permissionCode}
+            </if>
+            <if test="condition.state!=null">
+                AND state = #{condition.state}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthAccessControl">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shiro_auth_access_control
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.roleCode!=null">
+                AND roleCode = #{condition.roleCode}
+            </if>
+            <if test="condition.permissionCode!=null">
+                AND permissionCode = #{condition.permissionCode}
+            </if>
+            <if test="condition.state!=null">
+                AND state = #{condition.state}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+        limit 0,1
+    </select>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="own.jadezhang.learning.arbutus.dao.auth.IAuthUserDAO">
+    <!-- 在这里存放用户自定义的映射配置（注：AuthUserDAO.xml里各节点的ID不能在这里重复出现）  -->
+    <select id="getRoles" parameterType="java.lang.String" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthRole">
+      select r.* from shiro_auth_user_role AS ur
+      INNER JOIN shiro_auth_role as r ON  ur.roleCode = r.code
+      WHERE ur.userCode = #{userCode} AND r.available = 1;
+	</select>
+
+    <select id="getPermissions" parameterType="java.lang.String" resultType="own.jadezhang.learning.arbutus.domain.auth.AuthPermission">
+      SELECT * FROM shiro_auth_access_control AS ac
+      INNER JOIN shiro_auth_user_role ur ON  ac.roleCode = ur.roleCode
+      INNER JOIN shiro_auth_permission AS p ON ac.permissionCode = p.code
+      WHERE ur.userCode = #{userCode}
+	</select>
+</mapper>
